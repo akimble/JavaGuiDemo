@@ -1,15 +1,19 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 
 public class Frame1 {
 
+	protected static URL testURL = null; //do not make final so it can be initialized later
 	private JFrame frame;
 
 	/**
@@ -39,6 +43,14 @@ public class Frame1 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//Initialize testURL and use try/catch to check if the URL is in the right format
+		try {
+			testURL = new URL("https://generic.sucks");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.setBounds(100, 100, 450, 300);
@@ -48,7 +60,12 @@ public class Frame1 {
 		JButton btnNewButton = new JButton("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Add Yes/No option to go to URL", "To Do:", 0);
+				//JOptionPane.showMessageDialog(null, "Add Yes/No option to go to URL", "To Do:", 0);
+				try {
+					openWebpage(testURL.toURI());
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		btnNewButton.setSelectedIcon(new ImageIcon(Frame1.class.getResource("/com/sun/javafx/scene/control/skin/modena/HTMLEditor-Bold-Black.png")));
@@ -58,5 +75,17 @@ public class Frame1 {
 		btnNewButton.setBackground(new Color(255, 255, 255));
 		btnNewButton.setBounds(100, 74, 220, 137);
 		frame.getContentPane().add(btnNewButton);
+	}
+	
+	//https://stackoverflow.com/questions/10967451/open-a-link-in-browser-with-java-button
+	public static void openWebpage(URI uri) {
+	    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+	    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+	        try {
+	            desktop.browse(uri);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 }
