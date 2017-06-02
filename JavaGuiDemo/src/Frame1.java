@@ -1,15 +1,15 @@
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class Frame1 {
 
@@ -47,11 +47,11 @@ public class Frame1 {
 		try {
 			testURL = new URL("https://generic.sucks");
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +60,6 @@ public class Frame1 {
 		JButton btnNewButton = new JButton("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//JOptionPane.showMessageDialog(null, "Add Yes/No option to go to URL", "To Do:", 0);
 				try {
 					openWebpage(testURL.toURI());
 				} catch (URISyntaxException e) {
